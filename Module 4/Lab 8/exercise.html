@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moment.js Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment-timezone@0.5.34/builds/moment-timezone-with-data.min.js"></script>
+</head>
+
+<body>
+    <h1>1.</h1>
+    <p id="days-since-birth"></p>
+    <script>
+        var birthDate = moment('1995-06-15', 'YYYY-MM-DD');
+        var currentDate = moment();
+        var daysDiff = currentDate.diff(birthDate, 'days');
+        document.getElementById('days-since-birth').innerText = 'Number of days since birth: ' + daysDiff;
+    </script>
+
+    <h1>2. </h1>
+    <p id="age-display"></p>
+    <script>
+        var birthDate = moment('1998-06-15', 'YYYY-MM-DD');
+        var currentDate = moment();
+
+        var years = currentDate.diff(birthDate, 'years');
+        birthDate.add(years, 'years');
+        var months = currentDate.diff(birthDate, 'months');
+        birthDate.add(months, 'months');
+        var days = currentDate.diff(birthDate, 'days');
+        document.getElementById('age-display').innerText = `${years} years, ${months} months, and ${days} days`;
+    </script>
+
+    <h1>3.</h1>
+    <p id="closest-date"></p>
+    <script>
+        var date1 = moment('2023-12-25', 'YYYY-MM-DD');
+        var date2 = moment('2025-01-01', 'YYYY-MM-DD');
+        var currentDate = moment();
+        var diff1 = Math.abs(currentDate.diff(date1, 'days'));
+        var diff2 = Math.abs(currentDate.diff(date2, 'days'));
+        var closestDate = diff1 <= diff2 ? date1 : date2;
+        document.getElementById('closest-date').innerText = 'The closest date to today is: ' + closestDate.format('YYYY-MM-DD');
+    </script>
+
+    <h1>4. </h1>
+    <p id="pre-arvo-date"></p>
+    <script>
+        var date1 = moment('2026-12-25', 'YYYY-MM-DD');
+        var date2 = moment('2025-01-01', 'YYYY-MM-DD');
+        var result = '';
+
+        if (date1.isBefore(date2)) {
+            result = 'The first date is before the second date.';
+        } else if (date1.isAfter(date2)) {
+            result = 'The first date is after the second date.';
+        } else {
+            result = 'The two dates are the same.';
+        }
+
+        document.getElementById('pre-arvo-date').innerText = result;
+    </script>
+
+    <h1>5. </h1>
+    <p id="london-time"></p>
+    <script>
+        var londonTime = moment.tz("Europe/London");
+        document.getElementById('london-time').innerText = 'Current time in London: ' + londonTime.format('YYYY-MM-DD HH:mm:ss');
+    </script>
+</body>
+
+</html>

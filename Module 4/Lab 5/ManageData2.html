@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic News Updates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        #news-container {
+            margin-top: 20px;
+        }
+
+        .news-item {
+            background-color: #f4f4f4;
+            margin-bottom: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+
+        .news-item h2 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .news-item p {
+            font-size: 1em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Latest News</h1>
+    <div id="news-container"></div>
+
+    <script>
+        let news = [
+            { id: 1, title: 'Election Results', content: "Newly elected minister..." },
+            { id: 2, title: 'Sporting Success', content: "World Cup winners..." },
+            { id: 3, title: 'Tornado Warning', content: "Residents should prepare for possible tornado..." }
+        ];
+
+        function loadNews() {
+            const newsContainer = document.getElementById('news-container');
+
+            newsContainer.innerHTML = '';
+
+            news.forEach(item => {
+                const newsItem = document.createElement('div');
+                newsItem.classList.add('news-item');
+
+               
+                const title = document.createElement('h2');
+                title.textContent = item.title;
+                newsItem.appendChild(title);
+
+               
+                const content = document.createElement('p');
+                content.textContent = item.content;
+                newsItem.appendChild(content);
+
+               
+                newsContainer.appendChild(newsItem);
+            });
+        }
+
+        
+        loadNews();
+
+      
+        setInterval(loadNews, 5000);
+    </script>
+
+</body>
+
+</html>

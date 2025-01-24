@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic News Updates</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        #news-container {
+            margin-top: 20px;
+        }
+
+        .news-item {
+            background-color: #f4f4f4;
+            margin-bottom: 10px;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+
+        .news-item h2 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .news-item p {
+            font-size: 1em;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .form-container input,
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Latest News</h1>
+    <div id="news-container"></div>
+
+    <div class="form-container">
+        <h2>Add New News Item</h2>
+        <input type="text" id="news-title" placeholder="News Title" required>
+        <textarea id="news-content" placeholder="News Content" rows="4" required></textarea>
+        <button onclick="addNews()">Submit News</button>
+    </div>
+
+    <div class="form-container">
+        <button onclick="toggleAutoRefresh()">Stop Auto-Refresh</button>
+    </div>
+
+    <script>
+      
+        let news = [
+            { id: 1, title: 'Election Results', content: "Newly elected minister..." },
+            { id: 2, title: 'Sporting Success', content: "World Cup winners..." },
+            { id: 3, title: 'Tornado Warning', content: "Residents should prepare for possible tornado..." }
+        ];
+
+        let autoRefresh = true; 
+
+        function loadNews() {
+            const newsContainer = document.getElementById('news-container');
+
+            newsContainer.innerHTML = '';
+
+            news.forEach(item => {
+                const newsItem = document.createElement('div');
+                newsItem.classList.add('news-item');
+
+                const title = document.createElement('h2');
+                title.textContent = item.title;
+                newsItem.appendChild(title);
+
+                const content = document.createElement('p');
+                content.textContent = item.content;
+                newsItem.appendChild(content);
+
+                newsContainer.appendChild(newsItem);
+            });
+        }
+
+        function addNews() {
+            const title = document.getElementById('news-title').value;
+            const content = document.getElementById('news-content').value;
+
+            if (title && content) {
+                const newId = news.length ? news[news.length - 1].id + 1 : 1;
+                const newNewsItem = { id: newId, title: title, content: content };
+
+                news.push(newNewsItem);
+
+                document.getElementById('news-title').value = '';
+                document.getElementById('news-content').value = '';
+
+                loadNews();
+            } else {
+                alert('Please fill in both title and content!');
+            }
+        }
+
+        function toggleAutoRefresh() {
+            autoRefresh = !autoRefresh;
+            if (autoRefresh) {
+                intervalId = setInterval(loadNews, 5000); 
+                document.querySelector('button').textContent = "Stop Auto-Refresh";
+            } else {
+                clearInterval(intervalId); 
+                document.querySelector('button').textContent = "Start Auto-Refresh";
+            }
+        }
+
+        loadNews();
+
+        let intervalId = setInterval(loadNews, 5000);
+    </script>
+
+</body>
+
+</html>
